@@ -21,10 +21,12 @@
             event.preventDefault();
             const content = document.getElementById('listContent').value;
             const message = document.getElementById('commitMessage').value || 'Update list.txt';
+            const token = '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'; // Utilisation du nouveau token
+
             const response = await fetch('https://api.github.com/repos/Rescanme/Rescanme.github.io/actions/workflows/update-list.yml/dispatches', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `token GITHUB_TOKEN`, // Remplacez par un GitHub token
+                    'Authorization': `token ${token}`,
                     'Accept': 'application/vnd.github.v3+json',
                     'Content-Type': 'application/json'
                 },
@@ -40,8 +42,17 @@
             if (response.ok) {
                 alert('list.txt a été mis à jour avec succès.');
             } else {
-                alert('Erreur lors de la mise à jour de list.txt.');
+                const errorText = await response.text();
+                alert('Erreur lors de la mise à jour de list.txt : ' + errorText);
             }
+        }
+
+        window.onload = function() {
+            // Cette section permet de charger le contenu actuel de list.txt, si nécessaire
+            // Par exemple :
+            // fetch('https://rescanme.github.io/list.txt')
+            //     .then(response => response.text())
+            //     .then(data => document.getElementById('listContent').value = data);
         }
     </script>
 </head>
