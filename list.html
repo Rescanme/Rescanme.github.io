@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,8 @@
         }
     </style>
     <script>
+        const token = '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'; // VOTRE TOKEN ICI
+
         async function loadList() {
             try {
                 const response = await fetch('https://rescanme.github.io/list.txt');
@@ -32,7 +34,6 @@
 
         async function saveList(event) {
             event.preventDefault();
-            const token = document.getElementById('token').value;
             const content = document.getElementById('listContent').value;
             const message = document.getElementById('commitMessage').value || 'Update list.txt';
 
@@ -79,8 +80,6 @@
 <body>
     <h1>Éditer list.txt</h1>
     <form onsubmit="saveList(event)">
-        <label for="token">Token GitHub :</label><br>
-        <input type="password" id="token" name="token"><br><br>
         <label for="listContent">Contenu de list.txt :</label><br>
         <textarea id="listContent" name="listContent"></textarea><br><br>
         <label for="commitMessage">Message de commit :</label><br>
