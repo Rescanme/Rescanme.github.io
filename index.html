@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection aléatoire</title>
+    <script>
+        async function redirectToRandomSite() {
+            try {
+                const response = await fetch('https://rescanme.github.io/list.txt');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const text = await response.text();
+                const sites = text.split('\n').filter(site => site.trim().length > 0);
+                if (sites.length > 0) {
+                    const randomSite = sites[Math.floor(Math.random() * sites.length)];
+                    window.location.href = randomSite;
+                } else {
+                    console.error('La liste des sites est vide.');
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement du fichier list.txt:', error);
+            }
+        }
+
+        window.onload = redirectToRandomSite;
+    </script>
+</head>
+<body>
+    <h1>Redirection en cours...</h1>
+</body>
+</html>
+  
