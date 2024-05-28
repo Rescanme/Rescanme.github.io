@@ -41,21 +41,33 @@
             }
         });
 
-        function updateListFile() {
+        async function updateListFile() {
             var urlList = Array.from(document.querySelectorAll('#urlList li')).map(function(li) {
                 return li.textContent;
             });
             var listContent = urlList.join('\n');
-            var blob = new Blob([listContent], { type: 'text/plain' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'list.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            
+            // Envoi de la liste modifiée à GitHub
+            var response = await fetch('https://api.github.com/repos/Rescanme/Rescanme.github.io/contents/list.txt', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'token VOTRE_TOKEN_GITHUB', // Remplacez VOTRE_TOKEN_GITHUB par votre propre jeton d'accès GitHub
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: 'Mise à jour de list.txt via l\'éditeur de liste',
+                    content: btoa(unescape(encodeURIComponent(listContent))),
+                    sha: 'SHA_DU_FICHIER_LIST_TXT', // Remplacez SHA_DU_FICHIER_LIST_TXT par le SHA actuel de votre fichier list.txt
+                })
+            });
+
+            if (response.ok) {
+                console.log('Liste mise à jour avec succès sur GitHub');
+            } else {
+                console.error('Erreur lors de la mise à jour de list.txt sur GitHub');
+            }
         }
     </script>
 </body>
 </html>
+
