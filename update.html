@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Éditeur de liste</title>
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), camera=(), microphone=()"/>
 </head>
 <body>
     <h1>Éditeur de liste</h1>
@@ -51,7 +52,7 @@
             var response = await fetch('https://api.github.com/repos/Rescanme/Rescanme.github.io/contents/list.txt', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': 'token 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', // Utilisation du nouveau token ici
+                    'Authorization': 'token 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', // Utilisation du token ici
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
