@@ -21,7 +21,7 @@
     </ul>
 
     <script>
-        document.getElementById('addForm').addEventListener('submit', function(event) {
+        document.getElementById('addForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             var urlInput = document.getElementById('url');
             var url = urlInput.value.trim();
@@ -30,14 +30,14 @@
                 listItem.textContent = url;
                 document.getElementById('urlList').appendChild(listItem);
                 urlInput.value = '';
-                updateListFile();
+                await updateListFile();
             }
         });
 
-        document.getElementById('urlList').addEventListener('click', function(event) {
+        document.getElementById('urlList').addEventListener('click', async function(event) {
             if (event.target.tagName === 'LI') {
                 event.target.remove();
-                updateListFile();
+                await updateListFile();
             }
         });
 
@@ -51,13 +51,13 @@
             var response = await fetch('https://api.github.com/repos/Rescanme/Rescanme.github.io/contents/list.txt', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': 'token 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', // Utilisation du token ici
+                    'Authorization': 'token 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', // Votre token GitHub
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     message: 'Mise à jour de list.txt via l\'éditeur de liste',
                     content: btoa(unescape(encodeURIComponent(listContent))),
-                    sha: '80ff88d81e0be3861cdb2abcab710cf5828c812f', // SHA du dernier commit de list.txt
+                    sha: '80ff88d81e0be3861cdb2abcab710cf5828c812f', // Remplacez ce SHA par le dernier SHA de votre fichier list.txt
                 })
             });
 
