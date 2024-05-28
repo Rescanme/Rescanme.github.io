@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur de liste</title>
+</head>
+<body>
+    <h1>Éditeur de liste</h1>
+    
+    <h2>Ajouter une URL</h2>
+    <form id="addForm">
+        <label for="url">URL :</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Ajouter</button>
+    </form>
+    
+    <h2>Supprimer une URL</h2>
+    <ul id="urlList">
+        <!-- Les URLs seront affichées ici -->
+    </ul>
+
+    <script>
+        document.getElementById('addForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var urlInput = document.getElementById('url');
+            var url = urlInput.value.trim();
+            if (url !== '') {
+                var listItem = document.createElement('li');
+                listItem.textContent = url;
+                document.getElementById('urlList').appendChild(listItem);
+                urlInput.value = '';
+                updateListFile();
+            }
+        });
+
+        document.getElementById('urlList').addEventListener('click', function(event) {
+            if (event.target.tagName === 'LI') {
+                event.target.remove();
+                updateListFile();
+            }
+        });
+
+        function updateListFile() {
+            var urlList = Array.from(document.querySelectorAll('#urlList li')).map(function(li) {
+                return li.textContent;
+            });
+            var listContent = urlList.join('\n');
+            var blob = new Blob([listContent], { type: 'text/plain' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'list.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
