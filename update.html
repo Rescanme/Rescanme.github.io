@@ -51,13 +51,13 @@
             var response = await fetch('https://api.github.com/repos/Rescanme/Rescanme.github.io/contents/list.txt', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': 'token VOTRE_TOKEN_GITHUB', // Remplacez VOTRE_TOKEN_GITHUB par votre propre jeton d'accès GitHub
+                    'Authorization': 'token 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', // Utilisation du token ici
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     message: 'Mise à jour de list.txt via l\'éditeur de liste',
                     content: btoa(unescape(encodeURIComponent(listContent))),
-                    sha: 'SHA_DU_FICHIER_LIST_TXT', // Remplacez SHA_DU_FICHIER_LIST_TXT par le SHA actuel de votre fichier list.txt
+                    sha: '80ff88d81e0be3861cdb2abcab710cf5828c812f', // SHA du dernier commit de list.txt
                 })
             });
 
@@ -70,4 +70,3 @@
     </script>
 </body>
 </html>
-
